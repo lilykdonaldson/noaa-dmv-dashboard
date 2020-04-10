@@ -1,7 +1,7 @@
 # NOAA Weather Data for the DMV Area (M4)
 As of now, we have displayed a map that shows the weather stations represented by red circles, similar to that of Homework 2. We used Homework 2 as a reference to figure out how to display nodes on the map. We have yet to figure out how to implement a hover feature over the nodes and show specific details on that weather station. We will have to find some tutorials online of how to do that. 
 
-![Map](map.png)
+![Map](map.PNG)
 
 We were working on line graphs with D3 and the NOAA API, but came into a lot of non-descriptive errors, so we switched to Plot.ly and Python requests so we could test the API data; the python file in the repo gets average temperature data for 2015-2020 for the Ronald Reagan Airport weather station and outputs a Plot.ly graph. Now that we’ve got the API to work and have seen what the output data looks like, we need to move it over to JS so we can insert a line graph with the API data into our HTML dashboard. 
 
