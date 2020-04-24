@@ -113,9 +113,15 @@
 		// d3.csv('data/sample.csv')
 		// 	.then(ready);
 		var stationNames= [
-		  {"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US","lat":39.1733,"long":-76.684},
-		  {"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US","lat":38.9349,"long":-77.4473},
-		  {"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US","lat":38.8472,"long":-77.03454}
+		  {"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US",
+		  "lat":39.1733,"long":-76.684, 'img': "tower.png",
+		},
+		  {"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US",
+		  "lat":38.9349,"long":-77.4473,'img': "tower.png",
+		},
+		  {"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US",
+		  "lat":38.8472,"long":-77.03454,'img': "tower.png",
+		}
 		];
 		
 		
@@ -125,24 +131,38 @@
             map.flyTo({center:[-77.106342, 38.956379]});
             break;
         case 'USW00013743': //DCA
-            var nodes = [{"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US","lat":38.8472,"long":-77.03454}]
+            var nodes = [{"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US","lat":38.8472,"long":-77.03454,'img': "tower.png"}]
             map.flyTo({center:[-77.03454,38.8472]});
             break;
         
         case 'USW00093738': //IAD
-        var nodes = [{"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US","lat":38.9349,"long":-77.4473}]
+        var nodes = [{"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US","lat":38.9349,"long":-77.4473,'img': "tower.png"}]
         map.flyTo({center:[-77.4473,38.9349]});
         	break;
         
         case 'USW00093721': //BWI
-        var nodes = [{"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US","lat":39.1733,"long":-76.684}];
+        var nodes = [{"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US","lat":39.1733,"long":-76.684,'img': "tower.png"}];
         map.flyTo({center:[-76.684,39.1733]});
     	}
 		console.log();
-
+		var defs = svg.append('svg:defs');
 	  	//Creates a circle svg mark for each of the power grid notes
-	    nodes.forEach(function(d) {
+	  	var config = {
+	  	  "avatar_size": 120//define the size of teh circle radius
+	  	}
+	    nodes.forEach(function(d,i) {
 				d.LngLat = [+d.long, +d.lat];
+				defs.append("svg:pattern")
+				  .attr("id", "grump_avatar" + i)
+				  .attr("width", config.avatar_size)
+				  .attr("height", config.avatar_size)
+				  .attr("patternUnits", "userSpaceOnUse")
+				  .append("svg:image")
+				  .attr("xlink:href", d.img)
+				  .attr("width", config.avatar_size)
+				  .attr("height", config.avatar_size)
+				  .attr("x", 0)
+				  .attr("y", 0);
 
 	    });
 
@@ -150,11 +170,14 @@
 	    g.selectAll('circle')
 	      .data(nodes)
 	      .enter().append('circle')
-	        .style("opacity", 0.6)
-	        .style("fill", 'red')
-	        .attr('r', 3)
-					.on("mouseover", handleMouseOver)
-					.on("mouseout", handleMouseOut);
+	        .attr("cx", config.avatar_size / 7)
+	        .attr("cy", config.avatar_size / 7)
+	        .attr("r", config.avatar_size / 7)
+	        .style("fill", "#fff")
+	        .style("fill", "url(#grump_avatar" + 0 + ")");
+	    //     .attr('r', 3)
+					// .on("mouseover", handleMouseOver)
+					// .on("mouseout", handleMouseOut);
 
 	  	//Ensuring the locations are set correctly and updated when the map view changes
 	  	//Event listeners for the map so that the circles are updated when the user interacts with the map
