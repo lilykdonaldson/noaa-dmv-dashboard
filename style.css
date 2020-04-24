@@ -41,7 +41,7 @@ h1{
 select{
 	font-size: 15px;
 }
-#map{
+#mapX{
 	margin: 20px;
 	width: 35%;
 	height: 40%;
@@ -53,4 +53,9 @@ select{
 }
 #no-selection-avg-temp{
 	text-align: center;
+}
+.mapboxgl-canvas-container {
+	width: 20px;
+    height: 40vh;
+
 }

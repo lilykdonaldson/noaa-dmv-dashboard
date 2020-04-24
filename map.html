@@ -48,14 +48,18 @@
 	var g = svg.append("g");
 
 	//Uploading data file, then() tells d3 to wait for file before proceeding with a callback function that manipulates the data
-	d3.csv('data/sample.csv')
-		.then(ready);
-
-  function ready(nodes) { //Argument is name of the data returned from deferred function
+	// d3.csv('data/sample.csv')
+	// 	.then(ready);
+	var nodes= [
+	  {"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US","lat":39.1733,"long":-76.684},
+	  {"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US","lat":38.9349,"long":-77.4473},
+	  {"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US","lat":38.8472,"long":-77.03454}
+	];
 
   	//Creates a circle svg mark for each of the power grid notes
     nodes.forEach(function(d) {
 			d.LngLat = [+d.long, +d.lat];
+
     });
 
     //Red circles with partial opacity
@@ -82,7 +86,7 @@
     });
 
     updateNodes();
-} //end ready()
+ //end ready()
 
 function updateNodes() { //Calls each time the map stops moving, then draws the circles in the updated pixel location
 	//Converting long and lat to the correct pixel locations on the screen
