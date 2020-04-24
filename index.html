@@ -101,20 +101,40 @@
 		});
 
 		//Place for our d3 marks to appear, get Mapbox map canvas container
-		var canvas = map.getCanvasContainer();
+		var canvas,svg,g;
+		function maybe(){
+		canvas = map.getCanvasContainer();
 
 		//Overlay d3 on the map, svg as a layer on the map
-		var svg = d3.select(canvas).append("svg");
-		var g = svg.append("g");
+		svg = d3.select(canvas).append("svg");
+		g = svg.append("g");
 
 		//Uploading data file, then() tells d3 to wait for file before proceeding with a callback function that manipulates the data
 		// d3.csv('data/sample.csv')
 		// 	.then(ready);
-		var nodes= [
+		var stationNames= [
 		  {"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US","lat":39.1733,"long":-76.684},
 		  {"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US","lat":38.9349,"long":-77.4473},
 		  {"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US","lat":38.8472,"long":-77.03454}
 		];
+		
+		
+		switch(document.getElementById("station").value) {
+        case 'all-stations':
+            var nodes = stationNames;
+            break;
+        case 'USW00013743': //DCA
+            var nodes = [{"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US","lat":38.8472,"long":-77.03454}]
+            break;
+        
+        case 'USW00093738': //IAD
+        var nodes = [{"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US","lat":38.9349,"long":-77.4473}]
+        	break;
+        
+        case 'USW00093721': //BWI
+        var nodes = [{"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US","lat":39.1733,"long":-76.684}];
+    	}
+		console.log();
 
 	  	//Creates a circle svg mark for each of the power grid notes
 	    nodes.forEach(function(d) {
@@ -146,7 +166,8 @@
 	    });
 
 	    updateNodes();
-	 //end ready()
+	 
+	 }//end ready()
 
 	function updateNodes() { //Calls each time the map stops moving, then draws the circles in the updated pixel location
 		//Converting long and lat to the correct pixel locations on the screen
@@ -192,7 +213,7 @@
 		//Select text by id and then remove
 		d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();  // Remove text location
 	}
-
+maybe();
 	</script>
 </body>
 

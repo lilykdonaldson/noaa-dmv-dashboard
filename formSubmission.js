@@ -7,6 +7,8 @@ var mm1 = [];
 var mm2 = [];
 var mm3 = [];
 function updateDataSelection(){
+	d3.selectAll("svg > *").remove();
+	maybe();
 	station = document.getElementById("station").value;
 	month = document.getElementById("month").value;
 	year = document.getElementById("year").value;
