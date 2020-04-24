@@ -1,7 +1,9 @@
 function updateDataSelection()
 {
-    var input = document.getElementById("month").value;
+    //var input = document.getElementById("month").value;
     document.getElementById("no-selection").innerHTML = "";
+
+
 
 // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 50}

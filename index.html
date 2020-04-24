@@ -3,17 +3,24 @@
 <head>
 	<meta charset="utf-8"/>
 	<title> DMV Weather Data </title>
-	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<script src='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
 	<link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
 	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script src="callNOAA.js"></script>
+	<script src="updateGraphs.js"></script>
+	<script src="formSubmission.js"></script>
 </head>
 
 <body>
+	
 	<h1>NOAA Weather Data for the DMV Area</h1>
 	<div id='map' style='width: 50%; height: 70%;'><div class ="module-label">DMV Map<hr></div></div>
-	<script src="map.js"></script>
+	<!--<script src="map.js"></script> -->
+
 	<div id ='chooseme'>
 		<div class ="module-label">Data Selection<hr></div>
 		<form id="when-where" onsubmit="return false;">
@@ -51,8 +58,9 @@
 	</div>
 	<div id="precipitation-graph">
 		<div class ="module-label">Precipitation<hr></div>
-		<script src="linegraph.js"></script>
-		<p id="no-selection"><i>Select a station, month, and year to view graph.</i></p>
+		
+		<div id="no-selection"><i>Select a station, month, and year to view graph.</i></div>
+		
 	</div>
 
 		<!--_ALL STATIONS_ during _ALL MONTHS_ of _2019_ GO </p></div> -->
