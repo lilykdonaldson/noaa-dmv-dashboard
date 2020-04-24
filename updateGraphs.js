@@ -1,5 +1,9 @@
 var dates = [];
 var tavg = [];
+var tavgT1 = [];
+var tavgT2 = [];
+var tavgT3 = [];
+var T1bool = false;
 var jan = [];
 var feb = [];
 var mar = [];
@@ -15,94 +19,18 @@ var dec = [];
 
 const arrAvg = arr => (arr.reduce((a,b) => a + b, 0) / arr.length).toFixed(2);
 
+var ctx;
+var linegraphT;
 
 function updateGraphs(month,year,stationID){
-    jan = [];
-    feb = [];
-    mar = [];
-    apr = [];
-    may = [];
-    jun = [];
-    jul = [];
-    aug = [];
-    sep = [];
-    oct = [];
-    nov = [];
-    dec = [];
     tavg = [];
     dates = [];
-    document.getElementById("no-selection-avg-temp").innerHTML = '<canvas id="temp-graph"></canvas>';
+    ctx = document.getElementById('tempgraph').getContext('2d');
+    clearMonths();
     /*-----------------------------------------------------------------*/
-    jsonData = callNOAA(month,year,stationID);
-    for (item in jsonData['results']){
-        if(periodMode=="month"){
-            var tempF = ((jsonData['results'][item].value)/10)* 9 / 5 + 32;
-            tavg.push(tempF);
-            dates.push((jsonData['results'][item].date).slice(0, 10));
-        }
-        else{
-            sortingHat(jsonData['results'][item].date,jsonData['results'][item].value);
-        }
-    }
-    if(periodMode=='year'){
-        tavg.push(arrAvg(jan));
-        tavg.push(arrAvg(feb));
-        tavg.push(arrAvg(mar));
-        tavg.push(arrAvg(apr));
-        tavg.push(arrAvg(may));
-        tavg.push(arrAvg(jun));
-        tavg.push(arrAvg(jul));
-        tavg.push(arrAvg(aug));
-        tavg.push(arrAvg(sep));
-        tavg.push(arrAvg(oct));
-        tavg.push(arrAvg(nov));
-        tavg.push(arrAvg(dec));
-        dates = ['JAN','FEB','MARCH','APRIL','MAY','JUNE','JULY','AUG','SEP','OCT','NOV','DEC'];
-
-    }
+    callMe(month,year,stationID);
     /*-----------------------------------------------------------------*/
-    console.log(tavg);
-
-    new Chart(document.getElementById("temp-graph"), {
-      type: 'line',
-      data: {
-        labels: dates,
-        datasets: [{ 
-            data: tavg,
-            label: "TAVG",
-            borderColor: "#009a9a",
-            fill: false,
-        }
-          // }, { 
-          //   data: [282,350,411,502,635,809,947,1402,3700,5267],
-          //   label: "Asia",
-          //   borderColor: "#8e5ea2",
-          //   fill: false
-          // }, { 
-          //   data: [168,170,178,190,203,276,408,547,675,734],
-          //   label: "Europe",
-          //   borderColor: "#3cba9f",
-          //   fill: false
-          // }, { 
-          //   data: [40,20,10,16,24,38,74,167,508,784],
-          //   label: "Latin America",
-          //   borderColor: "#e8c3b9",
-          //   fill: false
-          // }, { 
-          //   data: [6,3,2,2,7,26,82,172,312,433],
-          //   label: "North America",
-          //   borderColor: "#c45850",
-          //   fill: false
-          // }
-        ]
-      },
-      options: {
-        title: {
-          display: false,
-          text: 'Average Temperature over Time'
-        }
-      }
-    });
+    chartMe();
 }
 
 function sortingHat(dateS, temperatureC){
@@ -146,4 +74,82 @@ function sortingHat(dateS, temperatureC){
             break;
 
     }
+}
+function callMe(month,year,stationID){
+    jsonData = callNOAA(month,year,stationID);
+    for (item in jsonData['results']){
+        if(periodMode=="month"){
+            var tempF = ((jsonData['results'][item].value)/10)* 9 / 5 + 32;
+            tavg.push(tempF);
+            dates.push((jsonData['results'][item].date).slice(0, 10));
+        }
+        else{
+            sortingHat(jsonData['results'][item].date,jsonData['results'][item].value);
+        }
+    }
+    if(periodMode=='year'){
+        tavg.push(arrAvg(jan));
+        tavg.push(arrAvg(feb));
+        tavg.push(arrAvg(mar));
+        tavg.push(arrAvg(apr));
+        tavg.push(arrAvg(may));
+        tavg.push(arrAvg(jun));
+        tavg.push(arrAvg(jul));
+        tavg.push(arrAvg(aug));
+        tavg.push(arrAvg(sep));
+        tavg.push(arrAvg(oct));
+        tavg.push(arrAvg(nov));
+        tavg.push(arrAvg(dec));
+        dates = ['JAN','FEB','MARCH','APRIL','MAY','JUNE','JULY','AUG','SEP','OCT','NOV','DEC'];
+
+    }
+}
+function clearMonths(){
+    jan = [];
+    feb = [];
+    mar = [];
+    apr = [];
+    may = [];
+    jun = [];
+    jul = [];
+    aug = [];
+    sep = [];
+    oct = [];
+    nov = [];
+    dec = [];
+}
+function chartMe(){
+  if(periodMode=="month"){
+    var labell = month;
+  }
+  else{
+    var labell = year;
+  }
+  linegraphT = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{ 
+          data: tavg,
+          label: labell,
+          borderColor: "#009a9a",
+          fill: false,
+        }, 
+      ]
+    },
+    options: {
+      title: {
+        display: false,
+        text: 'Average Temperature over Time'
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Degrees Fahrenheit'
+          }
+        }]
+      } 
+    }
+  });
 }

@@ -4,11 +4,10 @@ var stationNameToId = {}; //map name to GHCND ID
 var APIkey = 'JsDVdrTYMcumWUloSrfsYLQFneUVwnie'; // for NOAA API, read from external file
 
 
-var periodMode, startdate, enddate;
+var startdate, enddate;
 
 function callNOAA(month,year,stationID) {
   if(month=="ALL MONTHS"){
-  	periodMode = "year";
   	startDate = year+"-01-01";
   	endDate = year+"-12-31";
   }
