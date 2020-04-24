@@ -36,13 +36,12 @@ function callNOAA(month,year,stationID) {
   	}
   	
   }
-var responseData = [];
+var responseData = {};
 if(stationID == "all-stations"){
 	var allstations = ['USW00093721','USW00093738','USW00013743'];
 	for (var i = 0; i < allstations.length; i++) {
 	  var url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TAVG&limit=1000&stationid=GHCND:'+allstations[i]+'&startdate='+startDate+'&enddate='+endDate;
-	  responseData = responseData.concat(makeHttpRequest(url, APIkey));
-	  console.log(responseData);
+	  responseData = jsonConcat(responseData,(makeHttpRequest(url, APIkey)));
 	}
 	
 	if (Object.keys(responseData).length == 0) {
@@ -57,7 +56,6 @@ else{
 	    alert('No NOAA data for ' + 'this' + ' station for those dates');
 	    document.getElementById("no-selection-avg-temp").innerHTML = "<i>Select a station, month, and year to view graph.</i>";
 	  }
-	  console.log(responseData);
 	}
 
 	return responseData;
@@ -110,6 +108,13 @@ function monthToMonth(month){
 	        return('12');
 
 	}
+}
+
+function jsonConcat(o1, o2) {
+ for (var key in o2) {
+  o1[key] = o2[key];
+ }
+ return o1;
 }
 
 

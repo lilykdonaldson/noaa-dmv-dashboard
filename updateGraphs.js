@@ -17,6 +17,18 @@ const arrAvg = arr => (arr.reduce((a,b) => a + b, 0) / arr.length).toFixed(2);
 
 
 function updateGraphs(month,year,stationID){
+    jan = [];
+    feb = [];
+    mar = [];
+    apr = [];
+    may = [];
+    jun = [];
+    jul = [];
+    aug = [];
+    sep = [];
+    oct = [];
+    nov = [];
+    dec = [];
     tavg = [];
     dates = [];
     document.getElementById("no-selection-avg-temp").innerHTML = '<canvas id="temp-graph"></canvas>';
@@ -49,7 +61,7 @@ function updateGraphs(month,year,stationID){
 
     }
     /*-----------------------------------------------------------------*/
-
+    console.log(tavg);
 
     new Chart(document.getElementById("temp-graph"), {
       type: 'line',
