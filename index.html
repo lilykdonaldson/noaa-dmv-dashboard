@@ -85,7 +85,7 @@
 	<div id='mapX'><div class ="module-label">DMV Map<hr></div><div id="map"> </div></div>
 
 	<script type="text/javascript">
-		var au = [-77.106342, 38.956379]; //Centering the map at AU (longitude, latitude)
+		var au = [-77.106342, 38.956379]; //center map
 
 		//Mapboxgl object, placeholder to render a map
 		//Tiles represent the world, the base layer on which we'll draw other shapes and visualizations
@@ -122,17 +122,21 @@
 		switch(document.getElementById("station").value) {
         case 'all-stations':
             var nodes = stationNames;
+            map.flyTo({center:[-77.106342, 38.956379]});
             break;
         case 'USW00013743': //DCA
             var nodes = [{"station-name":"WASHINGTON REAGAN NATIONAL AIRPORT, VA US","lat":38.8472,"long":-77.03454}]
+            map.flyTo({center:[-77.03454,38.8472]});
             break;
         
         case 'USW00093738': //IAD
         var nodes = [{"station-name":"WASHINGTON DULLES INTERNATIONAL AIRPORT, VA US","lat":38.9349,"long":-77.4473}]
+        map.flyTo({center:[-77.4473,38.9349]});
         	break;
         
         case 'USW00093721': //BWI
         var nodes = [{"station-name":"BALTIMORE WASHINGTON INTERNATIONAL AIRPORT, MD US","lat":39.1733,"long":-76.684}];
+        map.flyTo({center:[-76.684,39.1733]});
     	}
 		console.log();
 
