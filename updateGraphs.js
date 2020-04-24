@@ -19,13 +19,13 @@ const arrAvg = arr => (arr.reduce((a,b) => a + b, 0) / arr.length).toFixed(2);
 function updateGraphs(month,year,stationID){
     tavg = [];
     dates = [];
-    var input = document.getElementById("month").value;
-    document.getElementById("no-selection").innerHTML = '<canvas id="temp-graph"></canvas>';
+    document.getElementById("no-selection-avg-temp").innerHTML = '<canvas id="temp-graph"></canvas>';
     /*-----------------------------------------------------------------*/
     jsonData = callNOAA(month,year,stationID);
     for (item in jsonData['results']){
         if(periodMode=="month"){
-            tavg.push(jsonData['results'][item].value);
+            var tempF = ((jsonData['results'][item].value)/10)* 9 / 5 + 32;
+            tavg.push(tempF);
             dates.push((jsonData['results'][item].date).slice(0, 10));
         }
         else{
@@ -60,7 +60,7 @@ function updateGraphs(month,year,stationID){
         datasets: [{ 
             data: tavg,
             label: "TAVG",
-            borderColor: "#3e95cd",
+            borderColor: "#009a9a",
             fill: false,
         }
           // }, { 
@@ -95,7 +95,8 @@ function updateGraphs(month,year,stationID){
     });
 }
 
-function sortingHat(dateS, temperature){
+function sortingHat(dateS, temperatureC){
+    var temperature = (temperatureC/10)* 9 / 5 + 32;
     switch(dateS[5]+dateS[6]) {
         case '01':
             jan.push(temperature);

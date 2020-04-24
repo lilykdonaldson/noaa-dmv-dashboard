@@ -41,7 +41,7 @@ h1{
 select{
 	font-size: 15px;
 }
-#precipitation-graph{
+#avg-temperature-graph{
 	margin: 20px;
 	width: 35%;
 	height: 40%;
