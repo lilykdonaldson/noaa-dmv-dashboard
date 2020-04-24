@@ -36,16 +36,31 @@ function callNOAA(month,year,stationID) {
   	}
   	
   }
-//stationID = 'US1MDBC0003';
-console.log(stationID);
-var url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TAVG&limit=1000&stationid=GHCND:'+stationID+'&startdate='+startDate+'&enddate='+endDate;
-var responseData = makeHttpRequest(url, APIkey);
-console.log(responseData);
-  if (Object.keys(responseData).length == 0) {
-    alert('No NOAA data for ' + 'this' + ' station for those dates');
-    document.getElementById("no-selection-avg-temp").innerHTML = "<i>Select a station, month, and year to view graph.</i>";
-  }
-  return responseData;
+var responseData = [];
+if(stationID == "all-stations"){
+	var allstations = ['USW00093721','USW00093738','USW00013743'];
+	for (var i = 0; i < allstations.length; i++) {
+	  var url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TAVG&limit=1000&stationid=GHCND:'+allstations[i]+'&startdate='+startDate+'&enddate='+endDate;
+	  responseData = responseData.concat(makeHttpRequest(url, APIkey));
+	  console.log(responseData);
+	}
+	
+	if (Object.keys(responseData).length == 0) {
+	    alert('No NOAA data for ' + 'this' + ' station for those dates');
+	    document.getElementById("no-selection-avg-temp").innerHTML = "<i>Select a station, month, and year to view graph.</i>";
+	  }
+}
+else{
+	var url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TAVG&limit=1000&stationid=GHCND:'+stationID+'&startdate='+startDate+'&enddate='+endDate;
+	responseData = makeHttpRequest(url, APIkey);
+	if (Object.keys(responseData).length == 0) {
+	    alert('No NOAA data for ' + 'this' + ' station for those dates');
+	    document.getElementById("no-selection-avg-temp").innerHTML = "<i>Select a station, month, and year to view graph.</i>";
+	  }
+	  console.log(responseData);
+	}
+
+	return responseData;
 }
 
 function makeHttpRequest(url, APIkey) {
