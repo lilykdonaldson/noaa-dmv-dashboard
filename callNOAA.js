@@ -3,23 +3,8 @@ var stationName1, stationName2;
 var stationNameToId = {}; //map name to GHCND ID
 var APIkey = 'JsDVdrTYMcumWUloSrfsYLQFneUVwnie'; // for NOAA API, read from external file
 
-// ****** NOAA URLs ********** 
-var baseUrl = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCNDMS&stationid=GHCND:'
-var typeUrl = '&datatypeid='
-var endpoint = 'stations'
+
 var periodMode, startdate, enddate;
-
-// var yearRange = range(2015, 2020);
-// for (const i in yearRange) {
-// }
-// //jsonData = getDataOneStation();
-// for (item in jsonData['results']){
-// 	//console.log(jsonData['results'][item].value);
-// 	// if(jsonData['results'][item]=='TAVG'){
-// 	 	//console.log(jsonData['results'][item]);
-// 	// }
-
-// }
 
 function callNOAA(month,year,stationID) {
   if(month=="ALL MONTHS"){
@@ -51,13 +36,14 @@ function callNOAA(month,year,stationID) {
   	}
   	
   }
-  console.log(startDate);
-  console.log(endDate);
-  var url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TAVG&limit=1000&stationid=GHCND:USW00013743&startdate='+startDate+'&enddate='+endDate;
-  var responseData = makeHttpRequest(url, APIkey);
-  //console.log(Object.keys(responseData).length);
+//stationID = 'US1MDBC0003';
+console.log(stationID);
+var url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&datatypeid=TAVG&limit=1000&stationid=GHCND:'+stationID+'&startdate='+startDate+'&enddate='+endDate;
+var responseData = makeHttpRequest(url, APIkey);
+console.log(responseData);
   if (Object.keys(responseData).length == 0) {
     alert('No NOAA data for ' + 'this' + ' station for those dates');
+    document.getElementById("no-selection-avg-temp").innerHTML = "<i>Select a station, month, and year to view graph.</i>";
   }
   return responseData;
 }

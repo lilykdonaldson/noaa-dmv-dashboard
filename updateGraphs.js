@@ -34,7 +34,6 @@ function updateGraphs(month,year,stationID){
     }
     if(periodMode=='year'){
         tavg.push(arrAvg(jan));
-        console.log(jan);
         tavg.push(arrAvg(feb));
         tavg.push(arrAvg(mar));
         tavg.push(arrAvg(apr));
@@ -45,7 +44,6 @@ function updateGraphs(month,year,stationID){
         tavg.push(arrAvg(sep));
         tavg.push(arrAvg(oct));
         tavg.push(arrAvg(nov));
-        console.log(dec);
         tavg.push(arrAvg(dec));
         dates = ['JAN','FEB','MARCH','APRIL','MAY','JUNE','JULY','AUG','SEP','OCT','NOV','DEC'];
 
